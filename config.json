@@ -1,0 +1,38 @@
+{
+  "_comment": "npm-vuln-scanner configuration file",
+
+  "time_window": {
+    "_comment_mode": "Use ONE of the two modes below. Comment out (or delete) the one you don't want.",
+
+    "last_hours": 24,
+
+    "date_range": {
+      "_comment": "Format: DD-MM-YYYY. Remove this block (or set to null) when using last_hours.",
+      "from": null,
+      "to": null
+    }
+  },
+
+  "databases": {
+    "_comment": "Enable the sources you want to query.",
+    "github_advisory": true,
+    "nvd": false,
+    "osv": false
+  },
+
+  "cvss": {
+    "_comment_version": "Accepted values: 'v3', 'v4', or 'any'",
+    "version": "any",
+
+    "_comment_min_score": "Minimum numeric CVSS score (0.0 – 10.0). Set to null to use severity_filter instead.",
+    "min_score": null,
+
+    "_comment_severity": "Used only when min_score is null. Comma-separated list from: CRITICAL, HIGH, MEDIUM, LOW",
+    "severity_filter": ["CRITICAL", "HIGH"]
+  },
+
+  "output": {
+    "file": "output/vulnerabilities.json",
+    "pretty_print": true
+  }
+}

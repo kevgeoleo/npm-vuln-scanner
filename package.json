@@ -1,0 +1,15 @@
+{
+  "name": "npm-vuln-scanner",
+  "version": "1.0.0",
+  "description": "NPM vulnerability scanner using GitHub Advisory DB, NVD, and OSV",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "scan": "node src/index.js",
+    "start": "node src/index.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "node-fetch": "^3.3.2"
+  }
+}
