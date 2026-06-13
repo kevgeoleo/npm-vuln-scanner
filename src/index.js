@@ -6,6 +6,7 @@ import { writeFileSync, mkdirSync } from "fs";
 import { dirname, resolve } from "path";
 import { fileURLToPath } from "url";
 import { loadConfig } from "./config.js";
+import { parseCLI, applyOverrides } from "./cli.js";
 import { deduplicateFindings, toISO } from "./utils.js";
 import { fetchGitHubAdvisories } from "./sources/github.js";
 import { fetchNVD } from "./sources/nvd.js";
@@ -18,16 +19,37 @@ console.log("╔═════════════════════�
 console.log("║       npm-vuln-scanner  v1.0             ║");
 console.log("╚══════════════════════════════════════════╝\n");
 
+// ── Parse CLI flags (done first so --config path is available) ───────────────
+const cliOverrides = parseCLI();
+
 // ── Load config ───────────────────────────────────────────────────────────────
+const configPath = cliOverrides.configPath
+  ? resolve(cliOverrides.configPath)
+  : resolve(__dirname, "../config.json");
+
 let cfg;
 try {
-  cfg = loadConfig(resolve(__dirname, "../config.json"));
+  cfg = loadConfig(configPath);
 } catch (err) {
   console.error("❌  Config error:", err.message);
   process.exit(1);
 }
 
-console.log("⏱  Time window:");
+// Apply CLI overrides on top of config.json values
+cfg = applyOverrides(cfg, cliOverrides);
+
+// Log which settings came from CLI vs config
+const fromCLI = (key) => {
+  const map = {
+    time:     cliOverrides.hours !== undefined || cliOverrides.from,
+    sources:  cliOverrides.sources !== undefined,
+    cvss:     cliOverrides.severity || cliOverrides.minScore !== undefined || cliOverrides.cvssVersion,
+    output:   cliOverrides.outputFile || cliOverrides.noPretty,
+  };
+  return map[key] ? " (CLI)" : "";
+};
+
+console.log(`⏱  Time window${fromCLI("time")}:`);
 console.log(`     From : ${toISO(cfg.fromDate)}`);
 console.log(`     To   : ${toISO(cfg.toDate)}`);
 
@@ -35,13 +57,13 @@ const enabledSources = Object.entries(cfg.databases)
   .filter(([, v]) => v)
   .map(([k]) => k)
   .join(", ");
-console.log(`\n🗄  Sources   : ${enabledSources}`);
+console.log(`\n🗄  Sources${fromCLI("sources")}   : ${enabledSources}`);
 
 if (cfg.cvss.minScore !== null) {
-  console.log(`🔢  CVSS filter: score >= ${cfg.cvss.minScore} (version: ${cfg.cvss.version})`);
+  console.log(`🔢  CVSS filter${fromCLI("cvss")}: score >= ${cfg.cvss.minScore} (version: ${cfg.cvss.version})`);
 } else {
   console.log(
-    `⚠️  Severity filter: ${cfg.cvss.severityFilter.join(", ")} (CVSS version: ${cfg.cvss.version})`
+    `⚠️  Severity filter${fromCLI("cvss")}: ${cfg.cvss.severityFilter.join(", ")} (CVSS version: ${cfg.cvss.version})`
   );
 }
 console.log("");
