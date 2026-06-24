@@ -1,9 +1,9 @@
 {
   "meta": {
-    "generated_at": "2026-06-12T22:06:17.942Z",
+    "generated_at": "2026-06-24T20:18:36.219Z",
     "time_window": {
-      "from": "2026-06-11T22:06:16.988Z",
-      "to": "2026-06-12T22:06:16.988Z"
+      "from": "2025-06-01T00:00:00.000Z",
+      "to": "2025-06-02T23:59:59.999Z"
     },
     "sources_queried": [
       "github_advisory"
@@ -16,73 +16,7 @@
       ],
       "version": "any"
     },
-    "total_findings": 5
+    "total_findings": 0
   },
-  "vulnerabilities": [
-    {
-      "package_name": "esbuild",
-      "package_version": ">= 0.17.0, < 0.28.1",
-      "cvss_score": 8.1,
-      "cvss_severity": "HIGH",
-      "cvss_vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
-      "vuln_type": "CWE-426, CWE-494",
-      "date_published": "2026-06-12T20:08:59Z",
-      "vuln_id": "GHSA-gv7w-rqvm-qjhr",
-      "source": "github_advisory",
-      "summary": "esbuild: Missing binary integrity verification in Deno module enables remote code execution via NPM_CONFIG_REGISTRY",
-      "patched_version": "0.28.1"
-    },
-    {
-      "package_name": "@budibase/server",
-      "package_version": "< 3.39.0",
-      "cvss_score": 8.1,
-      "cvss_severity": "HIGH",
-      "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:N",
-      "vuln_type": "CWE-863",
-      "date_published": "2026-06-12T18:28:40Z",
-      "vuln_id": "GHSA-3gp5-q4jw-3v94",
-      "source": "github_advisory",
-      "summary": "Budibase: Basic app users can exfiltrate stored REST datasource auth by rewriting datasource base URL",
-      "patched_version": "3.39.0"
-    },
-    {
-      "package_name": "@budibase/server",
-      "package_version": "< 3.39.0",
-      "cvss_score": 7.5,
-      "cvss_severity": "HIGH",
-      "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N",
-      "vuln_type": "CWE-862",
-      "date_published": "2026-06-12T18:28:34Z",
-      "vuln_id": "GHSA-qhv3-wjg8-6fx6",
-      "source": "github_advisory",
-      "summary": "Budibase: Webhook schema endpoint authorization bypass allows unauthenticated mutation of webhook and automation schema",
-      "patched_version": "3.39.0"
-    },
-    {
-      "package_name": "@budibase/server",
-      "package_version": "< 3.39.0",
-      "cvss_score": 9,
-      "cvss_severity": "CRITICAL",
-      "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:L",
-      "vuln_type": "CWE-915",
-      "date_published": "2026-06-12T18:28:26Z",
-      "vuln_id": "GHSA-6xp4-cf37-ppjh",
-      "source": "github_advisory",
-      "summary": "Budibase: Workspace-scoped builder escalates to global admin via /api/public/v1/roles/assign",
-      "patched_version": "3.39.0"
-    },
-    {
-      "package_name": "@budibase/server",
-      "package_version": "< 3.39.0",
-      "cvss_score": 7.7,
-      "cvss_severity": "HIGH",
-      "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:N/A:N",
-      "vuln_type": "CWE-918",
-      "date_published": "2026-06-12T15:08:28Z",
-      "vuln_id": "GHSA-g6qx-g4pr-92v7",
-      "source": "github_advisory",
-      "summary": "Budibase: SSRF via OAuth2 Config Validation — Missing fetchWithBlacklist Protection",
-      "patched_version": "3.39.0"
-    }
-  ]
+  "vulnerabilities": []
 }

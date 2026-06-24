@@ -6,10 +6,15 @@
   "type": "module",
   "scripts": {
     "scan": "node src/index.js",
-    "start": "node src/index.js"
+    "start": "node src/index.js",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "dependencies": {
     "dotenv": "^16.4.5",
     "node-fetch": "^3.3.2"
+  },
+  "devDependencies": {
+    "vitest": "^3.x.x"
   }
 }
