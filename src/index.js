@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // src/index.js
 // Entry point — orchestrates config loading, source fetching, dedup, and output.
 

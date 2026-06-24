@@ -4,3 +4,4 @@ old/
 package-lock.json
 output/
 output/vulnerabilities.json
+backup/
