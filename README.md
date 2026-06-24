@@ -8,25 +8,30 @@ Settings can be defined in `config.json` and selectively overridden per-run via 
 
 ## Supported Sources
 
-| Source | Key required? | Notes |
-|--------|--------------|-------|
+| Source                 | Key required?             | Notes                                                           |
+| ---------------------- | ------------------------- | --------------------------------------------------------------- |
 | **GitHub Advisory DB** | Optional (`GITHUB_TOKEN`) | Default source. Token raises rate limit from 60 to 5,000 req/hr |
-| **NVD (NIST)** | Optional (`NVD_API_KEY`) | Keyword-searches CVEs for `npm`. Without key: 5 req/30 s |
-| **OSV (osv.dev)** | None | Open, no auth needed |
+| **NVD (NIST)**         | Optional (`NVD_API_KEY`)  | Keyword-searches CVEs for `npm`. Without key: 5 req/30 s        |
+| **OSV (osv.dev)**      | None                      | Open, no auth needed                                            |
 
 ---
+
+## Requirements
+
+`node v24+`
 
 ## Installation
 
 ```bash
 npm install
+npm link  #optional - enables user to directly call CLI tool using nvs command
 ```
 
 ---
 
 ## API Keys
 
-Add keys to **`.env`** (never commit this file):
+Add keys to **`.env`**:
 
 ```dotenv
 GITHUB_TOKEN=ghp_xxxxxxxxxxxxxxxxxxxx
@@ -49,14 +54,14 @@ Use **one** of the two modes:
 ```jsonc
 // Mode A — last N hours (here: last 24 h)
 "time_window": {
-  "last_hours": 24
+  "last_hours": 24  // default - null
 }
 
 // Mode B — explicit date range (inclusive)
 "time_window": {
   "date_range": {
     "from": "01-01-2025",   // DD-MM-YYYY
-    "to":   "31-01-2025"
+    "to":   "31-01-2025"    // default - null
   }
 }
 ```
@@ -106,7 +111,9 @@ Use **one** of the two modes:
 ```bash
 node src/index.js
 # or
-npm run scan
+npm run scan -- <options>
+# or
+nvs <options> # if you have run npm link to make nvs globally available
 ```
 
 ### Run with CLI overrides
@@ -147,41 +154,41 @@ All flags are optional. When provided they override `config.json`; when omitted 
 
 ### Time window — pick one
 
-| Flag | Value | Example |
-|------|-------|---------|
-| `--hours <n>` | Last N hours from now | `--hours 5` |
-| `--from <DD-MM-YYYY>` | Start of date range | `--from 01-06-2025` |
-| `--to <DD-MM-YYYY>` | End of date range (must pair with `--from`) | `--to 10-06-2025` |
+| Flag                  | Value                                       | Example             |
+| --------------------- | ------------------------------------------- | ------------------- |
+| `--hours <n>`         | Last N hours from now                       | `--hours 5`         |
+| `--from <DD-MM-YYYY>` | Start of date range                         | `--from 01-06-2025` |
+| `--to <DD-MM-YYYY>`   | End of date range (must pair with `--from`) | `--to 10-06-2025`   |
 
 ### Sources
 
-| Flag | Value | Example |
-|------|-------|---------|
+| Flag               | Value                                   | Example                |
+| ------------------ | --------------------------------------- | ---------------------- |
 | `--sources <list>` | Comma-separated: `github`, `nvd`, `osv` | `--sources github,osv` |
 
 `github` is an alias for `github_advisory`.
 
 ### CVSS filtering — pick one of `--severity` / `--min-score`
 
-| Flag | Value | Example |
-|------|-------|---------|
-| `--severity <list>` | `CRITICAL`, `HIGH`, `MEDIUM`, `LOW` | `--severity CRITICAL,HIGH` |
-| `--min-score <n>` | Numeric score 0.0–10.0 | `--min-score 7.5` |
-| `--cvss-version <ver>` | `v3`, `v4`, or `any` | `--cvss-version v3` |
+| Flag                   | Value                               | Example                    |
+| ---------------------- | ----------------------------------- | -------------------------- |
+| `--severity <list>`    | `CRITICAL`, `HIGH`, `MEDIUM`, `LOW` | `--severity CRITICAL,HIGH` |
+| `--min-score <n>`      | Numeric score 0.0–10.0              | `--min-score 7.5`          |
+| `--cvss-version <ver>` | `v3`, `v4`, or `any`                | `--cvss-version v3`        |
 
 ### Output
 
-| Flag | Description | Example |
-|------|-------------|---------|
-| `--output <path>` | Override output file path | `--output results/scan.json` |
-| `--no-pretty` | Write compact (minified) JSON | |
+| Flag              | Description                   | Example                      |
+| ----------------- | ----------------------------- | ---------------------------- |
+| `--output <path>` | Override output file path     | `--output results/scan.json` |
+| `--no-pretty`     | Write compact (minified) JSON |                              |
 
 ### Other
 
-| Flag | Description |
-|------|-------------|
-| `--config <path>` | Load a different config file |
-| `--help` | Print flag reference and exit |
+| Flag              | Description                   |
+| ----------------- | ----------------------------- |
+| `--config <path>` | Load a different config file  |
+| `--help`          | Print flag reference and exit |
 
 ---
 
@@ -195,27 +202,31 @@ All flags are optional. When provided they override `config.json`; when omitted 
     "generated_at": "2025-06-12T10:00:00.000Z",
     "time_window": {
       "from": "2025-06-11T10:00:00.000Z",
-      "to":   "2025-06-12T10:00:00.000Z"
+      "to": "2025-06-12T10:00:00.000Z",
     },
     "sources_queried": ["github_advisory"],
-    "cvss_filter": { "mode": "severity", "severities": ["CRITICAL","HIGH"], "version": "any" },
-    "total_findings": 12
+    "cvss_filter": {
+      "mode": "severity",
+      "severities": ["CRITICAL", "HIGH"],
+      "version": "any",
+    },
+    "total_findings": 12,
   },
   "vulnerabilities": [
     {
-      "package_name":    "lodash",
+      "package_name": "lodash",
       "package_version": "< 4.17.21",
-      "cvss_score":      9.8,
-      "cvss_severity":   "CRITICAL",
-      "cvss_vector":     "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
-      "vuln_type":       "CWE-1321",
-      "date_published":  "2021-02-15T00:00:00Z",
-      "vuln_id":         "GHSA-35jh-r3h4-6jhm",
-      "source":          "github_advisory",
-      "summary":         "Prototype Pollution in lodash",
-      "patched_version": "4.17.21"
-    }
-  ]
+      "cvss_score": 9.8,
+      "cvss_severity": "CRITICAL",
+      "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+      "vuln_type": "CWE-1321",
+      "date_published": "2021-02-15T00:00:00Z",
+      "vuln_id": "GHSA-35jh-r3h4-6jhm",
+      "source": "github_advisory",
+      "summary": "Prototype Pollution in lodash",
+      "patched_version": "4.17.21",
+    },
+  ],
 }
 ```
 
