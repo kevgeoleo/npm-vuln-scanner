@@ -4,7 +4,7 @@
   "time_window": {
     "_comment_mode": "Use ONE of the two modes below. Comment out (or delete) the one you don't want.",
 
-    "last_hours": 24,
+    "last_hours": 5,
 
     "date_range": {
       "_comment": "Format: DD-MM-YYYY. Remove this block (or set to null) when using last_hours.",
