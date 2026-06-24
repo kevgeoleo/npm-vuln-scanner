@@ -1,0 +1,27 @@
+{
+  "time_window": {
+    "date_range": {
+      "from": "01-06-2025",
+      "to": "10-06-2025"
+    }
+  },
+
+  "databases": {
+    "github_advisory": true,
+    "nvd": true,
+    "osv": false
+  },
+
+  "cvss": {
+    "version": "v3",
+    "min_score": null,
+    "severity_filter": [
+      "HIGH"
+    ]
+  },
+
+  "output": {
+    "file": "output/test.json",
+    "pretty_print": false
+  }
+}

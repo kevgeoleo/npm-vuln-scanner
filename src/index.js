@@ -21,7 +21,14 @@ console.log("║       npm-vuln-scanner  v1.0             ║");
 console.log("╚══════════════════════════════════════════╝\n");
 
 // ── Parse CLI flags (done first so --config path is available) ───────────────
-const cliOverrides = parseCLI();
+
+let cliOverrides;
+try {
+  cliOverrides = parseCLI();
+} catch (err) {
+  console.error(`❌ CLI error: ${err.message}`);
+  process.exit(1);
+}
 
 // ── Load config ───────────────────────────────────────────────────────────────
 const configPath = cliOverrides.configPath

@@ -54,7 +54,7 @@ const DATE_RE = /^\d{2}-\d{2}-\d{4}$/;
 function die(msg) {
   console.error(`❌  CLI error: ${msg}`);
   console.error(`    Run with --help for usage.\n`);
-  throw new Error(msg); // this helps in testing - throw error instead of process.exit(1)
+  process.exit(1);
 }
 
 /**

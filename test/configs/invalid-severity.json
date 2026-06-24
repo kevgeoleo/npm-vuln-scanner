@@ -1,0 +1,12 @@
+{
+  "time_window": {
+    "last_hours": 24
+  },
+
+  "cvss": {
+    "severity_filter": [
+      "CRITICAL",
+      "BOGUS"
+    ]
+  }
+}

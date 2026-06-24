@@ -1,0 +1,9 @@
+{
+  "time_window": {
+    "last_hours": 24,
+    "date_range": {
+      "from": "01-06-2025",
+      "to": "10-06-2025"
+    }
+  }
+}

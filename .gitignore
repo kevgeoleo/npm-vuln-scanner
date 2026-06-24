@@ -3,4 +3,5 @@ node_modules/
 old/
 package-lock.json
 output/
+output/vulnerabilities.json
 backup/

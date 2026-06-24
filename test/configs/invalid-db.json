@@ -1,0 +1,11 @@
+{
+  "time_window": {
+    "last_hours": 24
+  },
+
+  "databases": {
+    "github_advisory": false,
+    "nvd": false,
+    "osv": false
+  }
+}
