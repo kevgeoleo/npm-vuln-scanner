@@ -29,6 +29,12 @@ npm link  #optional - enables user to directly call CLI tool using nvs command
 
 ---
 
+## Test
+
+```bash
+npm test
+```
+
 ## API Keys
 
 Add keys to **`.env`**:
