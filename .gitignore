@@ -3,4 +3,4 @@ node_modules/
 old/
 output/
 output/vulnerabilities.json
-/backup
+backup/
