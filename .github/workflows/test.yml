@@ -1,0 +1,33 @@
+name: Test Suite
+
+on:
+  push:
+    branches:
+      - main
+      - add/**
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test: # create a job called test
+    runs-on: ubuntu-latest # github creates a temporary ubuntu VM
+
+    strategy:
+      matrix: # matrix lets you run same job multiple times with different values
+        node-version: [24] # can add more node versions within [] : eg. [20,22,24]
+
+    steps:
+      - name: Checkout repository # name - simply the display label, run - command to execute, uses - prebuilt github action OR custom action
+        uses: actions/checkout@v4 # prebuilt github action used to clone the repo inside vm
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4 # install node.js
+        with:
+          node-version: ${{ matrix.node-version }} # install node.js version specified in matrix
+
+      - name: Install dependencies
+        run: npm ci # npm ci uses lockfile instead of package.json. If you want to use package.json use npm install command
+
+      - name: Run tests
+        run: npm test # Run the test suite
