@@ -179,7 +179,7 @@ All flags are optional. When provided they override `config.json`; when omitted 
 | Flag                   | Value                               | Example                    |
 | ---------------------- | ----------------------------------- | -------------------------- |
 | `--severity <list>`    | `CRITICAL`, `HIGH`, `MEDIUM`, `LOW` | `--severity CRITICAL,HIGH` |
-| `--min-score <n>`      | Numeric score 0.0–10.0              | `--min-score 7.5`          |
+| `--min-score <n>`      | Numeric score 0.0 – 10.0              | `--min-score 7.5`          |
 | `--cvss-version <ver>` | `v3`, `v4`, or `any`                | `--cvss-version v3`        |
 
 ### Output
